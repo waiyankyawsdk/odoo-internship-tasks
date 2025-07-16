@@ -1,4 +1,4 @@
-name: Use Shared Lint Workflow (Python Only)
+name: Use Shared Lint Workflow (Python and JavaScript)
 
 on:
   push:
