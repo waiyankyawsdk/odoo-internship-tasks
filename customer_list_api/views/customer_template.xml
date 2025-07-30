@@ -1,0 +1,79 @@
+<odoo>
+    <template id="customer_view_template" name="Customer List">
+        <t t-call="website.layout">
+            <div class="container my-5">
+
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h2 class="fw-bold text-primary">✨ Our Awesome Customers</h2>
+                    <a href="/web#model=res.partner&amp;view_type=form"
+                       class="btn btn-lg btn-gradient shadow-sm text-white">
+                        <i class="fa fa-user-plus me-2"></i>
+                        Add New
+                    </a>
+                </div>
+
+
+                <div class="row g-4">
+                    <t t-foreach="customers" t-as="customer">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card h-100 border-0 shadow-lg rounded-4 customer-card text-white">
+                                <div class="card-body text-center">
+                                    <img t-att-src="'/web/image/res.partner/%s/image_1920' % customer.id"
+                                         class="rounded-circle mb-3 shadow"
+                                         width="100" height="100"
+                                         style="object-fit: cover; border: 4px solid #ffffff;"/>
+
+                                    <h5 class="fw-semibold mb-1">
+                                        <t t-esc="customer.name or 'No Name'"/>
+                                    </h5>
+
+                                    <p class="mb-1">
+                                        <i class="fa fa-envelope me-1"></i>
+                                        <t t-esc="customer.email or 'No email'"/>
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fa fa-phone me-1"></i>
+                                        <t t-esc="customer.phone or 'No phone'"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+
+            <style>
+                .btn-gradient {
+                background: linear-gradient(135deg, #ff416c, #ff4b2b);
+                border: none;
+                transition: 0.3s ease;
+                }
+
+                .btn-gradient:hover {
+                background: linear-gradient(135deg, #e03150, #e03c18);
+                transform: scale(1.05);
+                }
+
+                .customer-card {
+                background-color: #8B0000; /* Dark red */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+
+                .customer-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+                }
+
+                .customer-card i {
+                color: red;
+                }
+
+                .customer-card h5,
+                .customer-card p {
+                color: black;
+                }
+            </style>
+        </t>
+    </template>
+</odoo>

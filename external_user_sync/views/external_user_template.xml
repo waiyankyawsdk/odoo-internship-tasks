@@ -1,0 +1,79 @@
+<odoo>
+    <template id="external_user_page" name="External Users Page">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h2 class="text-center mb-4">External Users</h2>
+
+                <form method="POST" action="/sync-external-users" class="text-center mb-5">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <button type="submit" class="btn btn-success px-4 py-2">
+                        Sync External Users
+                    </button>
+                </form>
+
+                <div class="external-user-gallery d-flex flex-wrap justify-content-center gap-4 px-3">
+                    <t t-foreach="users" t-as="user">
+                        <div class="user-profile p-3 rounded shadow-sm text-center">
+                            <img t-att-src="'https://api.dicebear.com/8.x/initials/svg?seed=' + user.name"
+                                 class="rounded-circle mb-2"
+                                 width="100"
+                                 height="100"
+                                 alt="avatar"/>
+                            <h5 class="fw-bold m-0">
+                                <t t-esc="user.name"/>
+                            </h5>
+                            <small class="text-muted">
+                                <t t-esc="user.email"/>
+                            </small>
+                            <p class="mt-2 mb-0">
+                                <t t-esc="user.street"/>
+                                <br/>
+                                <t t-esc="user.city"/>
+                            </p>
+                        </div>
+                    </t>
+                </div>
+
+                <style>
+                    .external-user-gallery {
+                    /* For small devices, allow scroll */
+                    overflow-x: auto;
+                    }
+
+                    .user-profile {
+                    flex: 0 1 220px;
+                    max-width: 240px;
+                    background: #fdfdfd;
+                    border: 1px solid #e5e5e5;
+                    transition: transform 0.3s ease;
+                    }
+
+                    .user-profile:hover {
+                    transform: scale(1.05);
+                    background-color: #f0f8ff;
+                    }
+
+                    @media (max-width: 768px) {
+                    .external-user-gallery {
+                    flex-wrap: nowrap;
+                    scroll-snap-type: x mandatory;
+                    -webkit-overflow-scrolling: touch;
+                    }
+
+                    .user-profile {
+                    scroll-snap-align: start;
+                    flex: 0 0 auto;
+                    }
+                    }
+                </style>
+            </div>
+        </t>
+    </template>
+    <!-- Website menu -->
+    <record id="menu_external_users_web" model="website.menu">
+        <field name="name">External Users</field>
+        <field name="url">/external-users</field>
+        <field name="sequence" type="int">50</field>
+        <field name="parent_id" ref="website.main_menu"/>
+    </record>
+</odoo>
