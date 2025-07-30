@@ -1,0 +1,58 @@
+<odoo>
+    <template id="today_attendance_template" name="Today Attendance">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <h2 class="text-center fw-bold mb-5" style="color: #2F80ED;">Today's Attendance</h2>
+
+                <div class="row g-4">
+                    <t t-foreach="attendance_data.items()" t-as="item">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card shadow-sm border-0 rounded-4 h-100 attendance-card"
+                                 style="animation: fadeIn 0.6s ease-in-out;">
+                                <div class="card-body p-4">
+                                    <h5 class="card-title text-dark fw-bold mb-2">
+                                        <i class="fa fa-user-circle me-2 text-primary"></i>
+                                        <t t-esc="item[0]"/>
+                                    </h5>
+                                    <hr/>
+                                    <p class="mb-2">
+                                        <strong>Check In:</strong>
+                                        <span class="text-success">
+                                            <t t-esc="item[1]['check_in'] or 'N/A'"/>
+                                        </span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <strong>Check Out:</strong>
+                                        <span t-attf-class="fw-semibold #{item[1]['check_out'] and 'text-success' or 'text-danger'}">
+                                            <t t-esc="item[1]['check_out'] or 'Not yet checked out'"/>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <style>
+                @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+                }
+                .attendance-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .attendance-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+                }
+            </style>
+        </t>
+    </template>
+    <record id="menu_today_attendance" model="website.menu">
+        <field name="name">Today Attendance</field>
+        <field name="url">/today-attendance</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="90"/>
+    </record>
+</odoo>

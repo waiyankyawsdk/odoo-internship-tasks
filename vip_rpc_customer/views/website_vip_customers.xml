@@ -1,0 +1,78 @@
+<odoo>
+    <template id="vip_customer_template" name="VIP Customers Page" inherit_id="website.layout">
+        <xpath expr="//main" position="inside">
+            <div class="container my-5">
+                <h2 class="text-center mb-4 text-primary fw-bold" style="font-family: 'Comic Sans MS', cursive;">🌟
+                    Customer VIP List 🌟
+                </h2>
+                <div class="row g-4">
+                    <t t-foreach="partners" t-as="partner">
+                        <div class="col-md-4">
+                            <div class="card realistic-card shadow-sm h-100 p-3" style="border-radius: 18px;">
+                                <div class="text-center mb-3">
+                                    <img t-att-src="'/web/image/res.partner/' + str(partner.id) + '/image_1920'"
+                                         alt="Customer Photo"
+                                         class="rounded shadow-sm customer-photo"
+                                         style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 3px solid #a3743a;"/>
+                                </div>
+                                <div class="card-body text-center px-2">
+                                    <h5 class="card-title fw-bold" style="color: #3e2a14;">
+                                        <t t-esc="partner.name"/>
+                                    </h5>
+                                    <p class="mb-3" style="color: #5a421c; font-weight: 600;">
+                                        Status:
+                                        <strong t-attf-style="color: #{'darkgreen' if partner.is_vip else '#b37421'};">
+                                            <t t-esc="'VIP' if partner.is_vip else 'Regular'"/>
+                                        </strong>
+                                    </p>
+                                    <div>
+                                        <t t-if="partner.is_vip">
+                                            <span class="badge bg-success rounded-pill p-2 px-3"
+                                                  style="font-size: 14px;">
+                                                🌟 Already VIP
+                                            </span>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <style>
+                .realistic-card {
+                background: linear-gradient(135deg, #693A13 0%, #532f0f 100%);
+                box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.5),
+                inset 0 0 8px rgba(255, 230, 180, 0.3);
+                transition: transform 0.35s ease, box-shadow 0.35s ease;
+                cursor: default;
+                user-select: none;
+                }
+
+                .realistic-card:hover {
+                transform: translateY(-8px);
+                box-shadow:
+                0 18px 30px rgba(105, 58, 19, 0.9),
+                inset 0 0 12px rgba(255, 230, 180, 0.45);
+                }
+
+                .customer-photo {
+                transition: transform 0.35s ease, box-shadow 0.35s ease;
+                }
+
+                .realistic-card:hover .customer-photo {
+                transform: scale(1.12);
+                box-shadow: 0 6px 15px rgba(255, 200, 100, 0.6);
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <record id="website_menu_vip_customers" model="website.menu">
+        <field name="name">VIP Customers</field>
+        <field name="url">/vip-customers</field>
+        <field name="sequence">10</field>
+    </record>
+</odoo>

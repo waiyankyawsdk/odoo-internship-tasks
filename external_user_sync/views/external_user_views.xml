@@ -1,0 +1,70 @@
+<odoo>
+
+    <record id="view_external_user_list" model="ir.ui.view">
+        <field name="name">external.user.list</field>
+        <field name="model">external.user</field>
+        <field name="arch" type="xml">
+            <list string="External Users">
+                <button name="sync_external_users"
+                        string="Sync Users"
+                        type="object"
+                        class="btn-primary"
+                        context="{}"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="street"/>
+                <field name="city"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_external_user_form" model="ir.ui.view">
+        <field name="name">external.user.form</field>
+        <field name="model">external.user</field>
+        <field name="arch" type="xml">
+            <form string="External User">
+                <header>
+                    <button name="sync_external_users"
+                            string="Sync Users"
+                            type="object"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="street"/>
+                        <field name="city"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_external_user" model="ir.actions.act_window">
+        <field name="name">External Users</field>
+        <field name="res_model">external.user</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create or sync your external users.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_external_user_root"
+              name="External User Sync"
+              sequence="10"
+              parent="base.menu_administration"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_external_user"
+              name="Users"
+              parent="menu_external_user_root"
+              action="action_external_user"
+              sequence="1"
+              groups="base.group_user"/>
+
+</odoo>
